@@ -4,20 +4,29 @@ import BlockDuinoLogo from '../../../assets/images/BlockDuinoLogo.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/core';
+import {useForm, Controller} from 'react-hook-form'
+
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const ALPHANUM_REGEX = /^[ A-Za-z0-9_@./#&+-]*$/;
 
 
 const SignUpScreen = () => {
-  const[username, setUsername] = useState('');
-  const[email, setEmail] = useState('');
-  const[password, setPassword] = useState('');
-  const[confirmPassword, setConfirmPassword] = useState('');
 
   const navigation = useNavigation();
 
   const {height} = useWindowDimensions();
 
-  const onSignUpPressed = () => {
-    console.warn("Created");
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState : {errors}
+   } = useForm();
+
+  const pwd = watch('password');
+
+  const onSignUpPressed = (data) => {
+    console.log(data);
     //logic to validate
     navigation.navigate("Home");
   }
@@ -41,28 +50,53 @@ const SignUpScreen = () => {
         <Text style = {styles.CreateAccountText}> Create Account </Text>
         <Text style = {styles.InputText}> Username </Text>
         <CustomInput
+          name = "username"
           placeholder = ""
-          value = {username}
-          setValue = {setUsername}
+          control = {control}
+          rules = {{
+            required: 'Please key in your Username!',
+            pattern: {value: /^[A-Za-z]+$/i,
+              message: "Enter a valid Username!"}
+            }}
           />
         <Text style = {styles.InputText}> Email </Text>
         <CustomInput
-          placeholder = ""
-          value = {email}
-          setValue = {setEmail}
+           name = "Email"
+           placeholder = ""
+           control = {control}
+           rules = {{
+             required: 'Please key in your Email!',
+             pattern: {value: EMAIL_REGEX,
+               message: "Enter a valid Email!"}
+             }}
           />
         <Text style = {styles.InputText}> Password </Text>
         <CustomInput
+          name = "password"
           placeholder = ""
-          value = {password}
-          setValue = {setPassword}
+          control = {control}
+          rules = {{
+            required: 'Please key in your Password!',
+            minLength: {value: 6, message: "Password must be between 6-18 characters in length!"},
+            maxLength: {value: 18, message: "Password must be between 6-18 characters in length!"},
+            pattern: {value: ALPHANUM_REGEX,
+              message: "Password contains invalid characters!!"}
+            }}
           secureTextEntry
           />
         <Text style = {styles.InputText}> Confirm Password </Text>
         <CustomInput
+          name = "ConfirmPassword"
           placeholder = ""
-          value = {confirmPassword}
-          setValue = {setConfirmPassword}
+          control = {control}
+          rules = {{
+            required: 'Please confirm your Password!',
+            minLength: {value: 6, message: "Password must be between 6-18 characters in length!"},
+            maxLength: {value: 18, message: "Password must be between 6-18 characters in length!"},
+            pattern: {value: ALPHANUM_REGEX,
+              message: "Password contains invalid characters!"},
+            validate: value => value === pwd || 'Passwords do not match',
+            }}
           secureTextEntry
           />
 
@@ -74,7 +108,7 @@ const SignUpScreen = () => {
            Already have an account? Back to Login
          </Text>
        </TouchableOpacity>
-       <CustomButton text = 'Signup' onPress = {onSignUpPressed} />
+       <CustomButton text = 'Sign Up' onPress = {handleSubmit(onSignUpPressed)} />
         </View>
 
   </View>

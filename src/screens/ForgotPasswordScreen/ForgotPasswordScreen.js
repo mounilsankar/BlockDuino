@@ -4,15 +4,21 @@ import BlockDuinoLogo from '../../../assets/images/BlockDuinoLogo.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import {useForm, Controller} from 'react-hook-form';
+
 
 const ForgotPasswordScreen = () => {
-  const[username, setUsername] = useState('');
+  const {
+      control,
+      handleSubmit,
+      formState : {errors}
+     } = useForm();
 
   const {height} = useWindowDimensions();
 
   const navigation = useNavigation()
-  const onSendCodePressed = () => {
-    console.warn("Sent code");
+  const onSendCodePressed = (data) => {
+    console.log(data);
     // logic to send code to email
     navigation.navigate("SetPassword");
   }
@@ -39,9 +45,10 @@ const ForgotPasswordScreen = () => {
         </Text>
         <Text style = {styles.InputText}> Username </Text>
         <CustomInput
+          name = "username"
           placeholder = ""
-          value = {username}
-          setValue = {setUsername}
+          control = {control}
+          rules = {{required : 'Please key in your Username!' }}
           />
 
        <View style = {styles.TouchableOpRowStyle}>
@@ -54,7 +61,7 @@ const ForgotPasswordScreen = () => {
          </Text>
        </TouchableOpacity>
        </View>
-       <CustomButton text = 'Send Code' onPress = {onSendCodePressed} />
+       <CustomButton text = 'Send Code' onPress = {handleSubmit(onSendCodePressed)} />
         </View>
 
   </View>

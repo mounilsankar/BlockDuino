@@ -4,27 +4,34 @@ import BlockDuinoLogo from '../../../assets/images/BlockDuinoLogo.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import {useForm, Controller} from 'react-hook-form';
+
+const NUM_REGEX = /^[0-9]+$/;
+const ALPHANUM_REGEX = /^[ A-Za-z0-9_@./#&+-]*$/;
 
 const SetPasswordScreen = () => {
-  const[code, setCode] = useState('');
-  const[password, setPassword] = useState('');
-  const[confirmPassword, setConfirmPassword] = useState('');
-
+  const {
+      control,
+      handleSubmit,
+      watch,
+      formState : {errors}
+     } = useForm();
+  const pwd = watch('password');
   const navigation = useNavigation();
   const {height} = useWindowDimensions();
 
-  const onConfirmPressed = () => {
-    console.warn("Updated");
+  const onConfirmPressed = (data) => {
+    console.log(data);
+    //logic here
     navigation.navigate("Home");
   }
 
   const onBackPressed = () => {
-    console.warn("Back");
     navigation.navigate("LogIn");
   }
 
   const onResendCodePressed = () => {
-      console.warn("ResendCode");
+      //logic here
     }
   return (
   <ScrollView>
@@ -40,25 +47,48 @@ const SetPasswordScreen = () => {
         <Text style = {styles.ResetPasswordText}> Set Password </Text>
         <Text style = {styles.InputText}> Code </Text>
         <CustomInput
+          name = "code"
           placeholder = ""
-          value = {code}
-          setValue = {setCode}
+          control = {control}
+          rules = {{
+            required: 'Please key in the 6 digit code send to your email!',
+            minLength: {value: 6, message: "Incorrect code!"},
+            maxLength: {value: 6, message: "Incorrect code!"},
+            pattern: {value: NUM_REGEX,
+              message: "Incorrect code!"}
+            }}
           />
         <Text style = {styles.InputText}> Password </Text>
         <CustomInput
+          name = "password"
           placeholder = ""
-          value = {password}
-          setValue = {setPassword}
+          control = {control}
+          rules = {{
+            required: 'Please key in your Password!',
+            minLength: {value: 6, message: "Password must be between 6-18 characters in length!"},
+            maxLength: {value: 18, message: "Password must be between 6-18 characters in length!"},
+            pattern: {
+              value: ALPHANUM_REGEX,
+              message: "Password contains invalid characters!"}
+            }}
           secureTextEntry
           />
         <Text style = {styles.InputText}> Confirm Password </Text>
         <CustomInput
+          name = "ConfirmPassword"
           placeholder = ""
-          value = {confirmPassword}
-          setValue = {setConfirmPassword}
+          control = {control}
+          rules = {{
+            required: 'Please confirm your Password!',
+            minLength: {value: 6, message: "Password must be between 6-18 characters in length!"},
+            maxLength: {value: 18, message: "Password must be between 6-18 characters in length!"},
+            pattern: {
+              value: ALPHANUM_REGEX,
+              message: "Password must contain no spaces!"},
+              validate: value => value === pwd || 'Passwords do not match',
+            }}
           secureTextEntry
           />
-
        <View style = {styles.TouchableOpRowStyle}>
        <TouchableOpacity >
          <Text
@@ -77,7 +107,7 @@ const SetPasswordScreen = () => {
          </Text>
        </TouchableOpacity>
        </View>
-       <CustomButton text = 'Confirm' onPress = {onConfirmPressed} />
+       <CustomButton text = 'Confirm' onPress = {handleSubmit(onConfirmPressed)} />
         </View>
 
   </View>

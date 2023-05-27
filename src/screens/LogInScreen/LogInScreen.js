@@ -1,33 +1,44 @@
 import React, {useState} from 'react';
-import { View, Text, Image, StyleSheet, useWindowDimensions, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  useWindowDimensions,
+  TouchableOpacity,
+  ScrollView,
+  TextInput
+  } from 'react-native';
 import BlockDuinoLogo from '../../../assets/images/BlockDuinoLogo.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import {useForm, Controller} from 'react-hook-form'
 
 const LogInScreen = () => {
-  const[username, setUsername] = useState('');
-  const[password, setPassword] = useState('');
-
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
 
-  const onLoginPressed = () => {
-    console.warn("Login");
+  const {
+    control,
+    handleSubmit,
+    formState : {errors}
+   } = useForm();
+
+  const onLoginPressed = (data) => {
+    console.log(data);
     //validate user
     navigation.navigate('Home');
-  }
+  };
 
   const onSignUpPressed = () => {
-    console.warn("Sign up");
     navigation.navigate("SignUp");
-  }
+  };
 
   const onForgotPasswordPressed = () => {
-    console.warn("Forgot Password");
     navigation.navigate("ForgotPassword");
+  };
 
-  }
   return (
   <ScrollView>
   <View style = {styles.container}>
@@ -42,17 +53,24 @@ const LogInScreen = () => {
         <Text style = {styles.WelcomeBackText}> Welcome Back! </Text>
         <Text style = {styles.InputText}> Username </Text>
         <CustomInput
+          name = "username"
           placeholder = ""
-          value = {username}
-          setValue = {setUsername}
+          control = {control}
+          rules = {{required : 'Please key in your Username!' }}
           />
         <Text style = {styles.InputText}> Password </Text>
         <CustomInput
+          name = "password"
           placeholder = ""
-          value = {password}
-          setValue = {setPassword}
+          control = {control}
+          rules = {{
+            required: 'Please key in your Password!',
+            minLength: {value: 6, message: "Invalid password!"},
+            maxLength: {value: 18, message: "Invalid password!"}
+            }}
           secureTextEntry
           />
+
        <View style = {styles.TouchableOpRowStyle}>
        <TouchableOpacity >
          <Text
@@ -71,7 +89,10 @@ const LogInScreen = () => {
          </Text>
        </TouchableOpacity>
        </View>
-       <CustomButton text = 'SignUp' onPress = {onLoginPressed} />
+       <CustomButton
+          text = 'Login'
+          onPress = {handleSubmit(onLoginPressed)}
+        />
         </View>
 
   </View>
