@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "230607013376",
+    "project_id": "blockduino-c09d5",
+    "storage_bucket": "blockduino-c09d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230607013376:android:8dc30cc20773987d873ae5",
+        "android_client_info": {
+          "package_name": "com.blockduino"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj5fgFBDuTXu8sAdZ7UzZMkiHrqqFF33c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

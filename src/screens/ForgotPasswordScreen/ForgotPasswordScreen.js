@@ -6,6 +6,7 @@ import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 const ForgotPasswordScreen = () => {
   const {
@@ -43,14 +44,19 @@ const ForgotPasswordScreen = () => {
         <Text style = {styles.Description}>
         A 6 digit code will be sent to your registered email
         </Text>
-        <Text style = {styles.InputText}> Username </Text>
+        <Text style = {styles.InputText}> Email </Text>
         <CustomInput
-          name = "username"
+          name = "Email"
           placeholder = ""
           control = {control}
-          rules = {{required : 'Please key in your Username!' }}
+          rules = {{
+            required : 'Please key in your registered email!',
+            pattern: {
+              value: EMAIL_REGEX,
+              message: "Enter a valid Email!"
+              }
+            }}
           />
-
        <View style = {styles.TouchableOpRowStyle}>
        <TouchableOpacity >
          <Text

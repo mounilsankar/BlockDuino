@@ -1,19 +1,21 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { View, Text, Image, StyleSheet, useWindowDimensions, TouchableOpacity, ScrollView } from 'react-native';
 import BlockDuinoLogo from '../../../assets/images/BlockDuinoLogo.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import {useNavigation} from '@react-navigation/core';
-import {useForm, Controller} from 'react-hook-form'
+import {useForm, Controller} from 'react-hook-form';
+import { AuthContext } from '../../navigation/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const ALPHANUM_REGEX = /^[ A-Za-z0-9_@./#&+-]*$/;
 
 
 const SignUpScreen = () => {
-
   const navigation = useNavigation();
-
   const {height} = useWindowDimensions();
 
   const {
@@ -24,11 +26,25 @@ const SignUpScreen = () => {
    } = useForm();
 
   const pwd = watch('password');
+  const { register, user } = useContext(AuthContext); // Access the u
 
-  const onSignUpPressed = (data) => {
+  const onSignUpPressed = async(data) => {
     console.log(data);
-    //logic to validate
-    navigation.navigate("Home");
+    try{
+    await register(data.email, data.password);
+    const currUser = auth().currentUser;
+    console.log(user);
+    console.log(currUser);
+    if (user) {
+      await firestore().collection('users').doc(user.uid).set({
+      username: data.username,
+      email: data.email
+      });
+      navigation.navigate("Home");
+    }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const onBackPressed = () => {
@@ -61,7 +77,7 @@ const SignUpScreen = () => {
           />
         <Text style = {styles.InputText}> Email </Text>
         <CustomInput
-           name = "Email"
+           name = "email"
            placeholder = ""
            control = {control}
            rules = {{

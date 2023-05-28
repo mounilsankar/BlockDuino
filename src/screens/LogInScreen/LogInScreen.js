@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -13,11 +13,16 @@ import BlockDuinoLogo from '../../../assets/images/BlockDuinoLogo.png';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
-import {useForm, Controller} from 'react-hook-form'
+import {useForm, Controller} from 'react-hook-form';
+import { AuthContext } from '../../navigation/AuthProvider';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const LogInScreen = () => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
+  const { login, user } = useContext(AuthContext);
 
   const {
     control,
@@ -25,10 +30,15 @@ const LogInScreen = () => {
     formState : {errors}
    } = useForm();
 
-  const onLoginPressed = (data) => {
+  const onLoginPressed = async(data) => {
     console.log(data);
     //validate user
-    navigation.navigate('Home');
+    try{
+     await login(data.email, data.password);
+     navigation.navigate("Home");
+     } catch (e) {
+       console.log(e)
+     }
   };
 
   const onSignUpPressed = () => {
@@ -51,12 +61,18 @@ const LogInScreen = () => {
         </View>
         <View style = {styles.BottomContainer}>
         <Text style = {styles.WelcomeBackText}> Welcome Back! </Text>
-        <Text style = {styles.InputText}> Username </Text>
+        <Text style = {styles.InputText}> Email </Text>
         <CustomInput
-          name = "username"
+          name = "email"
           placeholder = ""
           control = {control}
-          rules = {{required : 'Please key in your Username!' }}
+          rules = {{
+            required : 'Please key in your registered email!',
+            pattern: {
+              value: EMAIL_REGEX,
+              message: "Enter a valid Email!"
+              }
+            }}
           />
         <Text style = {styles.InputText}> Password </Text>
         <CustomInput
