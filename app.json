@@ -1,4 +1,18 @@
 {
   "name": "BlockDuino",
-  "displayName": "BlockDuino"
+  "extra": {
+    "eas": {
+      "projectId": "3d6b2905-88d4-4b30-ae63-e73d9ee8630b"
+    }
+  },
+  "ios": {
+    "supportsTablet": true,
+    "bundleIdentifier": "com.yourbundleidentifier",
+    "infoPlist": {
+      "UIUserInterfaceStyle": "Automatic",
+      "UIRequiresFullScreen": true
+    },
+    "hermesEnabled": true // Add this line
+  }
 }
+

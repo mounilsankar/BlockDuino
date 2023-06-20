@@ -156,14 +156,18 @@ const LogInScreen = () => {
      fontWeight: 500,
      fontSize: 19,
      lineHeight: 23,
+     color: 'grey',
    },
    NewSignUpText: {
       marginLeft: 20,
       width:'100%',
+      color: 'grey',
    },
    ForgotPasswordText: {
     textAlign: 'right',
     marginRight: 16,
+    color: 'grey',
+
   },
   TouchableOpRowStyle: {
      flexDirection: 'row',
