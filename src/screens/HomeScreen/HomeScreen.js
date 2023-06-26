@@ -15,6 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 import { AuthContext } from '../../navigation/AuthProvider';
 import CustomHeader from '../../components/CustomHeader';
+import CustomProject from '../../components/CustomProject';
 
 const HomeScreen = () => {
   const {
@@ -37,8 +38,6 @@ const HomeScreen = () => {
     <ScrollView>
     <CustomHeader/>
     <View style = {styles.container}>
-
-
       <View style = {styles.BottomContainer}>
         <CustomButton
            text = 'Logout'
