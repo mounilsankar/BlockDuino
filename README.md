@@ -1,4 +1,5 @@
 # BlockDuino
+(Only available on android as of now)
 Steps to run app locally:
 
 1. Click Code on the top right of this page and click download zip in the dropdown menu.
