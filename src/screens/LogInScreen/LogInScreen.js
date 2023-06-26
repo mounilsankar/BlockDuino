@@ -31,7 +31,6 @@ const LogInScreen = () => {
    } = useForm();
 
   const onLoginPressed = async(data) => {
-    console.log(data);
     //validate user
     try{
      await login(data.email, data.password);

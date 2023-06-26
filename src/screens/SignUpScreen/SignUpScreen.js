@@ -26,21 +26,19 @@ const SignUpScreen = () => {
    } = useForm();
 
   const pwd = watch('password');
-  const { register, user } = useContext(AuthContext); // Access the u
+  const { register, user } = useContext(AuthContext); // Access the user
 
   const onSignUpPressed = async(data) => {
     console.log(data);
     try{
     await register(data.email, data.password);
-    const currUser = auth().currentUser;
-    console.log(user);
-    console.log(currUser);
+    console.log(user)
+    navigation.navigate("Home");
     if (user) {
       await firestore().collection('users').doc(user.uid).set({
       username: data.username,
       email: data.email
       });
-      navigation.navigate("Home");
     }
     } catch (e) {
       console.log(e)

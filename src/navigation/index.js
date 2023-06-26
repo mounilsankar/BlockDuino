@@ -26,7 +26,7 @@ const Navigation = () => {
   }, []);
   if(initializing) return null;
   return (
-    <NavigationContainer>
+    <NavigationContainer >
     { !user
     ? <Stack.Navigator screenOptions = {{headerShown : false }}>
         <Stack.Screen name = "LogIn" component = {LogInScreen} />
