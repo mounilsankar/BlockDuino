@@ -34,11 +34,19 @@ const HomeScreen = () => {
       console.log(error);
     }
    };
+  const handleAddTask = () => {
+     // TODO
+    }
   return (
     <ScrollView>
     <CustomHeader/>
     <View style = {styles.container}>
       <View style = {styles.BottomContainer}>
+      <TouchableOpacity onPress={() => handleAddTask()}>
+        <View style={styles.addWrapper}>
+          <Text style={styles.addText}>+</Text>
+        </View>
+      </TouchableOpacity>
         <CustomButton
            text = 'Logout'
            onPress = {onLogoutPressed}
@@ -62,6 +70,21 @@ const styles = StyleSheet.create ({
    BottomContainer: {
       flex: 2,
       backgroundColor: '#fff',
+      alignItems: 'center',
+
    },
+   addWrapper: {
+       width: 60,
+       height: 60,
+       backgroundColor: '#FFF',
+       borderRadius: 60,
+       justifyContent: 'center',
+       alignItems: 'center',
+       borderColor: '#C0C0C0',
+       borderWidth: 1,
+     },
+   addText: {
+     fontSize: 25,
+     },
   });
 export default HomeScreen
