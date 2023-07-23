@@ -7,6 +7,7 @@ import SignUpScreen from '../screens/SignUpScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import SetPasswordScreen from '../screens/SetPasswordScreen';
 import HomeScreen from '../screens/HomeScreen';
+import CodeScreen from '../screens/CodeScreen';
 import {AuthContext} from './AuthProvider';
 import auth from '@react-native-firebase/auth';
 
@@ -34,9 +35,11 @@ const Navigation = () => {
         <Stack.Screen name = "ForgotPassword" component = {ForgotPasswordScreen} />
         <Stack.Screen name = "SetPassword" component = {SetPasswordScreen} />
         <Stack.Screen name = "Home" component = {HomeScreen} />
+        <Stack.Screen name = "Code" component = {CodeScreen} />
       </Stack.Navigator>
     : <Stack.Navigator screenOptions = {{headerShown : false }}>
         <Stack.Screen name = "Home" component = {HomeScreen} />
+        <Stack.Screen name = "Code" component = {CodeScreen} />
         <Stack.Screen name = "LogIn" component = {LogInScreen} />
         <Stack.Screen name = "SignUp" component = {SignUpScreen} />
         <Stack.Screen name = "ForgotPassword" component = {ForgotPasswordScreen} />
