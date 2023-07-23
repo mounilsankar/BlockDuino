@@ -6,7 +6,7 @@ class CustomSmallBlock extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        options: ['0', '1', '2', '3', '4', '5', '9', '10', '12', '13', '14', '15', 'A0'],
+        options: [0, 1, 2, 3, 4, 5, 9, 10, 12, 13, 14, 15, 17],
         selected: "",
         items: [],
         options2: ['HIGH', 'LOW'],

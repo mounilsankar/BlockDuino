@@ -51,14 +51,19 @@ export default function App() {
   const [zones, setZones] = React.useState([
     {
       id: 6,
-      text: "if", type:"big", layout: null,
-      items: [{ id: 5, type:"big", text: "if",
-          items: [
-            { id: 7, type:"small", text: "setPin", layout: null},
-            { id: 8, type:"small", layout: null, text: "stateOfPin" },]
-     },
-     { id: 9, type:"small", layout: null, text: "readAnalogPin" },
-    { id: 10, type:"small", layout: null, text: "readAnalogPin" },
+      text: "on start", type:"big",
+      items: [
+     { id: 9, type:"small", text: "readAnalogPin" },
+    { id: 10, type:"small", text: "readAnalogPin" },
+
+    ],
+    },
+    {
+      id: 11,
+      text: "forever", type:"big",
+      items: [
+     { id: 9, type:"small", text: "readAnalogPin" },
+    { id: 10, type:"small", text: "readAnalogPin" },
 
     ],
     },
@@ -99,9 +104,18 @@ export default function App() {
             <Text stylae={styles.dragZoneTextStyle}>{zone.text}</Text>
             {children}
           </View>*/
-          <CustomBigBlock style={{
-            backgroundColor: hover ? "#E2E2E2" : "#FFF",
-          }}id={zone.text} children={children}/>
+          <View style={styles.bigBlock}>
+          <View style={{flexDirection:"row",padding:5}}>
+              <Text>   {zone.text} </Text>
+          </View>
+          <View style={{flexDirection:"row",padding:5,justifyContent:"flex-end",alignContent:"center"}}>
+              <Text style={{width:30}}>  </Text>
+              <View style={[{flexDirection:"column",flex:1,backgroundColor: hover ? "#E2E2E2" : "#FFF",minHeight:130,minWidth:200}]}>{children}</View>
+          </View>
+          </View>
+          /*<CustomBigBlock  style={{
+            ...styles.dragZoneStyle,backgroundColor: hover ? "#E2E2E2" : "#FFF",
+          }} children={children} cid={zone.text}/>*/
         );
       }}
     />
@@ -109,6 +123,14 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  bigBlock:{
+    borderRadius:5,
+    flexDirection:"column",
+    justifyContent:"flex-start",
+    minWidth:250,
+    minHeight:100,
+    backgroundColor:"blue"
+},
   container: {
     flex: 1,
   },
@@ -126,8 +148,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   zonesContainerStyle: {
-    flexDirection: "row",
+    flexDirection: "column",
     flexWrap: "wrap",
+    borderColor:"black",
+    borderWidth:2,
     justifyContent: "space-between",
   },
   dragItemStyle: {
@@ -149,9 +173,9 @@ const styles = StyleSheet.create({
     borderColor: "#F39200",
     borderWidth: 1,
     width: "47%",
-    padding: 15,
+    //padding: 15,
     minHeight: 130,
-    marginVertical: 15,
+    //marginVertical: 15,
   },
   dragZoneTextStyle: {
     position: "absolute",
@@ -161,7 +185,6 @@ const styles = StyleSheet.create({
     top: "50%",
   },
 });
-
 
 
 /*import React, {useCallback, useEffect, useMemo, useRef} from 'react';

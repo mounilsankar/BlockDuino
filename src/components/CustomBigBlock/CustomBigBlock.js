@@ -11,20 +11,17 @@ class CustomBigBlock extends Component {
         }
     }
     render(){
-        const {id,children} = this.props;
+        const {id,children,style} = this.props;
         switch(id){
           case "onStart":
             return(
               <View style={[styles.bigBlock,{flexDirection:"column"}]}>
                 <View style={{flexDirection:"row",padding:5}}>
                     <Text>   on start</Text>
-                    <TriangleLeft/>
-                    <View style={{backgroundColor:"gray",width:50,height:40}}/>
-                    <TriangleRight/>
                 </View>
                 <View style={{flexDirection:"row",padding:5,justifyContent:"flex-end",alignContent:"center"}}>
                     <Text style={{width:30}}>  </Text>
-                    <View style={{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200}}>{children}</View>
+                    <View style={[{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200},style]}>{children}</View>
                 </View>
             </View>
             );
@@ -39,7 +36,7 @@ class CustomBigBlock extends Component {
                   </View>
                   <View style={{flexDirection:"row",padding:5,justifyContent:"flex-end",alignContent:"center"}}>
                       <Text style={{width:30}}>do</Text>
-                      <View style={{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200}}>{children}</View>
+                      <View style={[{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200},style]}>{children}</View>
                   </View>
               </View>
           );
@@ -47,13 +44,10 @@ class CustomBigBlock extends Component {
             <View style={[styles.bigBlock,{flexDirection:"column"}]}>
                 <View style={{flexDirection:"row",padding:5}}>
                     <Text>   on start</Text>
-                    <TriangleLeft/>
-                    <View style={{backgroundColor:"gray",width:50,height:40}}/>
-                    <TriangleRight/>
                 </View>
                 <View style={{flexDirection:"row",padding:5,justifyContent:"flex-end",alignContent:"center"}}>
                     <Text style={{width:30}}>  </Text>
-                    <View style={{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200}}>{children}</View>
+                    <View style={[{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200},style]}>{children}</View>
                 </View>
             </View>
 
@@ -77,6 +71,7 @@ const styles = StyleSheet.create ({
         flexDirection:"row",
         justifyContent:"flex-start",
         minWidth:250,
+        minHeight:100,
         backgroundColor:"blue"
     },
     numberBlock:{

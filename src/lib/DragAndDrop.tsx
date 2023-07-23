@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { PanResponderGestureState, ScrollView, ViewStyle } from "react-native";
+import { PanResponderGestureState, ScrollView, ViewStyle ,Text, TouchableOpacity} from "react-native";
 import Container, {
   ContainerProps,
   ContainerState,
@@ -8,6 +8,7 @@ import Container, {
 } from "./Container";
 import ItemsContainer from "./ItemsContainer";
 import ZonesContainer from "./ZonesContainer";
+import { isVisible } from "blockly/core/tooltip";
 interface DragAndDropState extends ContainerState {
   items: any[];
   zones: any[];
@@ -22,6 +23,7 @@ interface DragAndDropState extends ContainerState {
     height: number;
   } | null;
   itemsContainerLayout: LayoutProps | null;
+  isVisible: boolean;
 }
 interface DragAndDropProps extends ContainerProps {
   items: any[];
@@ -50,6 +52,7 @@ interface DragAndDropProps extends ContainerProps {
   itemsInZoneDisplay?: Display;
   itemsNumCollumns?: number;
   itemsInZoneNumCollumns?: number;
+  
 }
 
 const PERCENT = 0.15;
@@ -66,15 +69,16 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
     itemsContainerLayout: null,
     addedHeight: 0,
     mounted: false,
+    isVisible: false,
   };
   timeout: any | null = null;
   ref = React.createRef<ScrollView>();
 
   UNSAFE_componentWillReceiveProps(nextProps: DragAndDropProps) {
     const newState: { items?: any[]; zones?: any[] } = {};
-    if (nextProps.items !== this.props.items) {
+    /*if (nextProps.items !== this.props.items) {
       newState.items = nextProps.items;
-    }
+    }*/
     if (nextProps.zones !== this.props.zones) {
       newState.zones = nextProps.zones;
       for (let zone of newState.zones) {
@@ -289,6 +293,11 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
     return false;
   };
 
+  toggleComponent = () => {
+    this.setState((prevState) => ({
+      isVisible: !prevState.isVisible,
+    }));
+  };
   render() {
     const {
       itemKeyExtractor,
@@ -316,6 +325,7 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
       otherStyle.zIndex = 2;
       otherStyle.elevation = 2;
     }
+
     return (
       //@ts-ignore
       <ScrollView
@@ -336,7 +346,18 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
         onLayout={(e) => this.onSetLayout(e)}
       >
         {headerComponent}
-        <ItemsContainer
+        <TouchableOpacity style={{backgroundColor: '#2ecc71',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 3,}}onPress={this.toggleComponent}>
+          <Text>{this.state.isVisible? "Hide Code Blocks" :"Show Code Blocks"}</Text>
+        </TouchableOpacity>
+        {this.state.isVisible && <ItemsContainer
           itemsContainerStyle={itemsContainerStyle}
           dragging={dragging}
           itemKeyExtractor={itemKeyExtractor}
@@ -353,7 +374,7 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
           itemsContainerHeightFixe={itemsContainerHeightFixe}
           onDrag={this.onDrag}
           items={items}
-        />
+        />}
         <ZonesContainer
           renderZone={renderZone}
           zones={zones}
