@@ -11,21 +11,54 @@ class CustomBigBlock extends Component {
         }
     }
     render(){
-        const {id} = this.props;
-        return (
-            <View style={[styles.bigBlock,{flexDirection:"column"}]}>
+        const {id,children} = this.props;
+        switch(id){
+          case "onStart":
+            return(
+              <View style={[styles.bigBlock,{flexDirection:"column"}]}>
                 <View style={{flexDirection:"row",padding:5}}>
-                    <Text>   if</Text>
+                    <Text>   on start</Text>
                     <TriangleLeft/>
                     <View style={{backgroundColor:"gray",width:50,height:40}}/>
                     <TriangleRight/>
                 </View>
                 <View style={{flexDirection:"row",padding:5,justifyContent:"flex-end",alignContent:"center"}}>
-                    <Text>do</Text>
-                    <View style={{backgroundColor:"gray",width:200,height:40}}/>
+                    <Text style={{width:30}}>  </Text>
+                    <View style={{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200}}>{children}</View>
                 </View>
             </View>
-        );
+            );
+          case "if":
+            return (
+              <View style={[styles.bigBlock,{flexDirection:"column"}]}>
+                  <View style={{flexDirection:"row",padding:5}}>
+                      <Text>   if</Text>
+                      <TriangleLeft/>
+                      <View style={{backgroundColor:"gray",width:50,height:40}}/>
+                      <TriangleRight/>
+                  </View>
+                  <View style={{flexDirection:"row",padding:5,justifyContent:"flex-end",alignContent:"center"}}>
+                      <Text style={{width:30}}>do</Text>
+                      <View style={{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200}}>{children}</View>
+                  </View>
+              </View>
+          );
+          default:
+            <View style={[styles.bigBlock,{flexDirection:"column"}]}>
+                <View style={{flexDirection:"row",padding:5}}>
+                    <Text>   on start</Text>
+                    <TriangleLeft/>
+                    <View style={{backgroundColor:"gray",width:50,height:40}}/>
+                    <TriangleRight/>
+                </View>
+                <View style={{flexDirection:"row",padding:5,justifyContent:"flex-end",alignContent:"center"}}>
+                    <Text style={{width:30}}>  </Text>
+                    <View style={{flexDirection:"column",backgroundColor:"gray",minHeight:130,minWidth:200}}>{children}</View>
+                </View>
+            </View>
+
+        }
+        
     }
 
 }
@@ -43,7 +76,7 @@ const styles = StyleSheet.create ({
         borderRadius:5,
         flexDirection:"row",
         justifyContent:"flex-start",
-        width:250,
+        minWidth:250,
         backgroundColor:"blue"
     },
     numberBlock:{

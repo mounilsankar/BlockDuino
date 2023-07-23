@@ -365,11 +365,29 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
           itemsInZoneStyle={itemsInZoneStyle}
           numCollumns={itemsInZoneNumCollumns}
           itemsDisplay={itemsInZoneDisplay}
-          onZoneLayoutChange={(key, layout) => {
+          onZoneLayoutChange = {(key: string | number, layout) => {
             const zones = [...this.state.zones];
-            const index = zones.findIndex((z) => zoneKeyExtractor(z) === key);
-            zones[index].layout = layout;
-            this.setState({ zones });
+          
+            const findZone = (zones: any[], key: string | number): any | null => {
+              for (const zone of zones) {
+                if (zone.id === key) {
+                  return zone;
+                }
+                if (zone.items) {
+                  const foundZone = findZone(zone.items, key);
+                  if (foundZone) {
+                    return foundZone;
+                  }
+                }
+              }
+              return null;
+            };
+          
+            const zoneToUpdate = findZone(zones, key);
+            if (zoneToUpdate) {
+              zoneToUpdate.layout = layout;
+              this.setState({ zones });
+            }
           }}
           zonesContainerStyle={zonesContainerStyle}
           itemKeyExtractor={itemKeyExtractor}

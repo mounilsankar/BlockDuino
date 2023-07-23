@@ -43,24 +43,32 @@ import CustomSmallBlock from "./src/components/CustomSmallBlock/CustomSmallBlock
 import CustomBigBlock from "./src/components/CustomBigBlock/CustomBigBlock";
 export default function App() {
   const [items, setItems] = React.useState([
-    { id: 1, text: "setPin" },
-    { id: 2, text: "stateOfPin" },
-    { id: 3, text: "readAnalogPin" },
-    { id: 4, text: "readAnalogPin" },
+    { id: 1, type:"small",text: "setPin" },
+    { id: 2, type:"small", text: "stateOfPin" },
+    { id: 3, type:"small", text: "readAnalogPin" },
+    { id: 4, type:"small", text: "readAnalogPin" },
   ]);
   const [zones, setZones] = React.useState([
     {
-      id: 1,
-      text: "Test zone 1",
-      items: [{ id: 5, text: "setPin" }],
+      id: 6,
+      text: "if", type:"big", layout: null,
+      items: [{ id: 5, type:"big", text: "if",
+          items: [
+            { id: 7, type:"small", text: "setPin", layout: null},
+            { id: 8, type:"small", layout: null, text: "stateOfPin" },]
+     },
+     { id: 9, type:"small", layout: null, text: "readAnalogPin" },
+    { id: 10, type:"small", layout: null, text: "readAnalogPin" },
+
+    ],
     },
   ]);
 
   return (
-    <View>
+    /*<View>
     <CustomBigBlock/>
-    </View>
-    /*<DragAndDrop
+    </View>*/
+    <DragAndDrop
       style={styles.container}
       contentContainerStyle={styles.contentContainerStyle}
       itemKeyExtractor={(item) => item.id}
@@ -75,13 +83,14 @@ export default function App() {
       }}
       itemsInZoneStyle={styles.itemsInZoneStyle}
       renderItem={(item) => {
-        return (
-          <CustomSmallBlock id={item.text}/>
-        );
+        if (item.type==="big"){
+            return(<CustomBigBlock id={item.text}/>);
+        }
+          return(<CustomSmallBlock id={item.text}/>);
       }}
       renderZone={(zone, children, hover) => {
         return (
-          <View
+          /*<View
             style={{
               ...styles.dragZoneStyle,
               backgroundColor: hover ? "#E2E2E2" : "#FFF",
@@ -89,10 +98,13 @@ export default function App() {
           >
             <Text stylae={styles.dragZoneTextStyle}>{zone.text}</Text>
             {children}
-          </View>
+          </View>*/
+          <CustomBigBlock style={{
+            backgroundColor: hover ? "#E2E2E2" : "#FFF",
+          }}id={zone.text} children={children}/>
         );
       }}
-    />*/
+    />
   );
 }
 
@@ -149,7 +161,6 @@ const styles = StyleSheet.create({
     top: "50%",
   },
 });
-
 
 
 
