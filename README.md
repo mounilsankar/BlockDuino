@@ -9,3 +9,7 @@ Steps to run app locally:
 4. Run $ npx react-native start in your terminal
 5. Run $ npx react-native run-android to start the app on your android emulator 
 6. The end
+
+Test account:
+Username: mounil@gmail.com
+Password: mounil
