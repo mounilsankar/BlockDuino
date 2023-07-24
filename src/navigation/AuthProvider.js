@@ -16,11 +16,14 @@ export const AuthProvider = ({children}) => {
               await auth().signInWithEmailAndPassword(email, password);
               const currentUser = auth().currentUser;
               setUser(currentUser);
+              console.log(user)
           },
           register: async(email, password) => {
             await auth().createUserWithEmailAndPassword(email, password);
             const currentUser = auth().currentUser;
             setUser(currentUser);
+            console.log(currentUser);
+            console.log(user)
           },
           logout: async () => {
              await auth().signOut();

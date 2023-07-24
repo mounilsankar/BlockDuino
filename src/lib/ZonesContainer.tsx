@@ -7,7 +7,6 @@ import Container, {
   LayoutProps,
 } from "./Container";
 import DragZOne from "./DragZone";
-import { ScrollView } from "react-native-gesture-handler";
 
 interface ZonesContainerState extends ContainerState {
   layout: LayoutProps;
