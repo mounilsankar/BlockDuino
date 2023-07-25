@@ -36,6 +36,7 @@ interface ZonesContainerProps extends ContainerProps {
     children?: ReactElement,
     hover?: boolean
   ) => ReactElement;
+  onStateChange:(zones:any[])=>any;
 }
 class ZonesContainer extends Container<
   ZonesContainerProps,
@@ -60,6 +61,7 @@ class ZonesContainer extends Container<
       addedHeight,
       itemsDisplay,
       numCollumns,
+      onStateChange,
     } = this.props;
     return (
       <View style={zonesContainerStyle}>
@@ -67,6 +69,7 @@ class ZonesContainer extends Container<
           const key = zoneKeyExtractor(zone);
           return (
             <DragZOne
+              onStateChange={onStateChange}
               onZoneLayoutChange={onZoneLayoutChange}
               zoneId={key}
               key={key}

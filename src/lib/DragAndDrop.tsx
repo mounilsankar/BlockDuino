@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { PanResponderGestureState, ScrollView, ViewStyle ,Text, TouchableOpacity} from "react-native";
+import { PanResponderGestureState, ScrollView, ViewStyle ,Text,View, TouchableOpacity} from "react-native";
 import Container, {
   ContainerProps,
   ContainerState,
@@ -8,7 +8,8 @@ import Container, {
 } from "./Container";
 import ItemsContainer from "./ItemsContainer";
 import ZonesContainer from "./ZonesContainer";
-import { isVisible } from "blockly/core/tooltip";
+//import firebase from '@react-native-firebase/app';
+//import '@react-native-firebase/storage';
 interface DragAndDropState extends ContainerState {
   items: any[];
   zones: any[];
@@ -245,17 +246,17 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
       const zone = zones[hoverIndex];
       for (let z of zones) {
         if (z === zone) {
-          if (!zone.items) {
-            zone.items = [item];
+          if (!zone.contains) {
+            zone.contains = [item];
           } else {
             let itemIndex = zone?.items.findIndex(
               (i: any) => ke(i) === ke(item)
             );
             if (itemIndex === -1) {
-              if (maxItemsPerZone && maxItemsPerZone === zone.items.length) {
+              if (maxItemsPerZone && maxItemsPerZone === zone.contains.length) {
                 ok = false;
               } else {
-                zone.items.push(item);
+                zone.contains.push(item);
               }
             }
           }
@@ -317,6 +318,7 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
       itemsInZoneDisplay,
       itemsInZoneNumCollumns,
       itemsNumCollumns,
+      onMaj
     } = this.props;
     const { items, zones, dragging, itemsContainerLayout } = this.state;
     // if (this.state.changed) return <View style={style} />;
@@ -346,6 +348,31 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
         onLayout={(e) => this.onSetLayout(e)}
       >
         {headerComponent}
+        <View style={{flexDirection:"row"}}>
+              <TouchableOpacity style={{backgroundColor: '#4fbaf0',
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          borderRadius: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 2,
+          elevation: 3,}}onPress={this.toggleComponent}>
+                <Text>Save Code</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={{backgroundColor: '#4fbaf0',
+          paddingVertical: 10,
+          paddingHorizontal: 20,
+          borderRadius: 8,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.2,
+          shadowRadius: 2,
+          elevation: 3,}}onPress={this.toggleComponent}>
+                <Text>Upload code</Text>
+              </TouchableOpacity>
+              
+        </View>
         <TouchableOpacity style={{backgroundColor: '#2ecc71',
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -371,12 +398,14 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
           layout={itemsContainerLayout}
           onLayout={(layout) => this.setState({ itemsContainerLayout: layout })}
           onDragEnd={this.onDragEnd}
+          onStateChange={(zones)=> onMaj(zones,items)}
           itemsContainerHeightFixe={itemsContainerHeightFixe}
           onDrag={this.onDrag}
           items={items}
         />}
         <ZonesContainer
           renderZone={renderZone}
+          onStateChange={(zones)=> onMaj(zones,items)}
           zones={zones}
           zoneKeyExtractor={zoneKeyExtractor}
           changed={this.state.changed}
@@ -394,8 +423,8 @@ class DragAndDrop extends Container<DragAndDropProps, DragAndDropState> {
                 if (zone.id === key) {
                   return zone;
                 }
-                if (zone.items) {
-                  const foundZone = findZone(zone.items, key);
+                if (zone.contains) {
+                  const foundZone = findZone(zone.contains, key);
                   if (foundZone) {
                     return foundZone;
                   }

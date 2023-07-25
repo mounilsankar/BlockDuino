@@ -34,6 +34,7 @@ interface ItemsContainerProps extends ContainerProps {
   renderItem: (item: any) => ReactElement;
   itemsDisplay?: Display;
   numCollumns?: number;
+  onStateChange:(zones:any[])=>any;
 }
 class ItemsContainer extends Container<
   ItemsContainerProps,

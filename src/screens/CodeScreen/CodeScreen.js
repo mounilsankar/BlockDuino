@@ -1,30 +1,30 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import DragAndDrop from "./src/lib/DragAndDrop";
-import { AuthProvider } from './src/navigation/AuthProvider';
-import CustomSmallBlock from "./src/components/CustomSmallBlock/CustomSmallBlock";
-import CustomBigBlock from "./src/components/CustomBigBlock/CustomBigBlock";
+import DragAndDrop from "../../lib/DragAndDrop";
+import { AuthProvider } from '../../navigation/AuthProvider';
+import CustomSmallBlock from "../../components/CustomSmallBlock/CustomSmallBlock";
+import CustomBigBlock from "../../components/CustomBigBlock/CustomBigBlock";
 export default function CodeScreen() {
   const [items, setItems] = React.useState([
     { id: 1, type:"small",text: "setPin" },
-    { id: 2, type:"small", text: "stateOfPin" },
+    { id: 3, type:"small", text: "stateOfPin" },
     { id: 3, type:"small", text: "readAnalogPin" },
     { id: 4, type:"small", text: "readAnalogPin" },
   ]);
   const [zones, setZones] = React.useState([
     {
-      id: 6,
+      id: 1,
       text: "on start", type:"big",
-      items: [
+      contains: [
      { id: 9, type:"small", text: "readAnalogPin" },
     { id: 10, type:"small", text: "readAnalogPin" },
 
     ],
     },
     {
-      id: 11,
+      id: 2,
       text: "forever", type:"big",
-      items: [
+      contains: [
      { id: 9, type:"small", text: "readAnalogPin" },
     { id: 10, type:"small", text: "readAnalogPin" },
 

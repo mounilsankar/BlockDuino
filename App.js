@@ -1,4 +1,4 @@
-/*import React from 'react';
+import React from 'react';
 import LogInScreen from './src/screens/LogInScreen';
 import SignUpScreen from './src/screens/SignUpScreen';
 import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
@@ -29,13 +29,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;*/
+export default App;
 
 
 
 
 
-import React from "react";
+/*import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DragAndDrop from "./src/lib/DragAndDrop";
 import { AuthProvider } from './src/navigation/AuthProvider';
@@ -72,7 +72,7 @@ export default function App() {
   return (
     /*<View>
     <CustomBigBlock/>
-    </View>*/
+    </View>
     <DragAndDrop
       style={styles.container}
       contentContainerStyle={styles.contentContainerStyle}
@@ -103,7 +103,7 @@ export default function App() {
           >
             <Text stylae={styles.dragZoneTextStyle}>{zone.text}</Text>
             {children}
-          </View>*/
+          </View>
           <View style={styles.bigBlock}>
           <View style={{flexDirection:"row",padding:5}}>
               <Text>   {zone.text} </Text>
@@ -113,9 +113,9 @@ export default function App() {
               <View style={[{flexDirection:"column",flex:1,backgroundColor: hover ? "#E2E2E2" : "#FFF",minHeight:130,minWidth:200}]}>{children}</View>
           </View>
           </View>
-          /*<CustomBigBlock  style={{
+          <CustomBigBlock  style={{
             ...styles.dragZoneStyle,backgroundColor: hover ? "#E2E2E2" : "#FFF",
-          }} children={children} cid={zone.text}/>*/
+          }} children={children} cid={zone.text}/>
         );
       }}
     />
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     top: "50%",
   },
 });
-
+*/
 
 /*import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import CustomSmallBlock from './src/components/CustomSmallBlock/CustomSmallBlock';

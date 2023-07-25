@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-import { SelectList } from 'react-native-dropdown-select-list'
 
 class CustomSmallBlock extends Component {
     constructor(props) {
