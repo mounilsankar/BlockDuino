@@ -36,6 +36,7 @@ const HomeScreen = () => {
    };
   const handleAddTask = () => {
      // TODO
+     navigation.navigate('Code');
     }
   return (
     <ScrollView>
